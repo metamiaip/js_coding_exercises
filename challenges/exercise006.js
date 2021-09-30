@@ -6,6 +6,7 @@
  */
 const sumMultiples = arr => {
   if (arr === undefined) throw new Error("arr is required");
+  return arr.reduce((p, a) => a%3==0||a%5==0? p + a:p,0);
 };
 
 /**
@@ -33,6 +34,17 @@ const getComplementaryDNA = str => {
  */
 const isItPrime = n => {
   if (n === undefined) throw new Error("n is required");
+  if (n===1) {
+    return false;
+  }else if(n === 2){
+    return true;
+  }else{
+    for(var x = 2; x < n; x++){
+      if(n % x === 0){
+        return false;
+      }
+    }
+    return true;  
 };
 
 /**
@@ -70,9 +82,9 @@ const areWeCovered = (staff, day) => {
 
 module.exports = {
   sumMultiples,
-  isValidDNA,
-  getComplementaryDNA,
-  isItPrime,
-  createMatrix,
-  areWeCovered
+  //isValidDNA,
+  //getComplementaryDNA,
+  isItPrime //,
+  //createMatrix,
+  //areWeCovered
 };
