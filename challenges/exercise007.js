@@ -15,9 +15,18 @@ const sumDigits = n => {
  * @param {Number} end
  * @param {Number} step
  */
-const createRange = (start, end, step) => {
+const createRange = (start, end, step = 1) => {
   if (start === undefined) throw new Error("start is required");
   if (end === undefined) throw new Error("end is required");
+  let output = [];
+  if (typeof end === 'undefined') {
+    end = start;
+    start = 0;
+  }
+  for (let i = start; i <= end; i += step) {
+    output.push(i);
+  }
+  return output;
 };
 
 /**
@@ -52,6 +61,46 @@ const createRange = (start, end, step) => {
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
+  //http://book.mixu.net/node/ch5.html
+  let nameProp = "";
+  let nameArr = [];
+  function searchObject(users) {
+    let dateProp = "";
+    let minutes = 0;
+    for (let prop in users) {
+      if (typeof(users[prop]) == "object") {
+        if (prop == "usage" && dateProp!="") {
+          const usageProp = JSON.parse(JSON.stringify(users[prop]));
+          minutes = 0;
+          for (let el in usageProp) {
+            minutes += usageProp[el];
+          }
+          if (minutes > 100) {
+            //console.log(nameProp + ': ' + dateProp + ': ' + minutes.toString()); 
+            nameArr.push(nameProp);
+            console.log(nameArr);
+          }
+          else {
+           // console.log("No user found!"); 
+           console.log(nameArr);
+          }
+        }
+        else {
+          searchObject(users[prop]);
+        }
+      }
+      else {
+        if (prop == "username") {
+          nameProp = users[prop];
+        }
+        if (prop == "date" && users[prop] == date) {
+          dateProp = users[prop];
+        }
+        
+      }
+    }
+  }
+  return users.filter( item => {searchObject(item)});
 };
 
 /**
@@ -66,6 +115,13 @@ const getScreentimeAlertList = (users, date) => {
  */
 const hexToRGB = hexStr => {
   if (hexStr === undefined) throw new Error("hexStr is required");
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexStr);
+    
+  return result ? {
+    R: parseInt(result[1], 16),
+    G: parseInt(result[2], 16),
+    B: parseInt(result[3], 16)
+  } : null;
 };
 
 /**

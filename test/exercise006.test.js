@@ -2,8 +2,8 @@ const {
     sumMultiples,
     //isValidDNA,
     //getComplementaryDNA,
-    isItPrime  //,
-    //createMatrix,
+    isItPrime,
+    createMatrix //,
     //areWeCovered
   } = require("../challenges/exercise006");
 
@@ -24,4 +24,11 @@ describe("isItPrime", () => {
         expect(isItPrime(3)).toBe(true);
         expect(isItPrime(137)).toBe(true);
     });
+});
+
+describe("createMatrix", () => {
+  test("receive a number and return an array of n arrays, each filled with n items", () => {  
+      expect(createMatrix(9,"foo")).toBe([["foo","foo","foo"],["foo","foo","foo"],["foo","foo","foo"]]);
+      expect(createMatrix(7,"foo").toBe("n is not a square number(e.g. sq num of 9 is 3");
+  });
 });

@@ -61,6 +61,20 @@ const isItPrime = n => {
 const createMatrix = (n, fill) => {
   if (n === undefined) throw new Error("n is required");
   if (fill === undefined) throw new Error("fill is required");
+  if (!Number.isInteger(Math.sqrt(n))) throw new Error("n is not a square number(e.g. sq num of 9 is 3");
+  
+  /*
+  //initial version
+  const sr = Math.sqrt(n);
+  const arr = new Array(sr);
+  for (let i=0; i < arr.length; i++) {arr[i] = fill;};
+  const finalarr = new Array(sr);
+  for (let j=0; j < finalarr.length; j++) {finalarr[j] = arr;};
+  
+  return finalarr;
+  */
+  return Array(Math.sqrt(n)).fill(Array(Math.sqrt(n)).fill(fill));
+
 };
 
 /**
