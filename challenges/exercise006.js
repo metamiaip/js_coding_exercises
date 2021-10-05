@@ -6,7 +6,7 @@
  */
 const sumMultiples = arr => {
   if (arr === undefined) throw new Error("arr is required");
-  return arr.reduce((p, a) => a%3==0||a%5==0? p + a:p,0);
+  return arr.reduce((sumArr, num) => num%3==0||num%5==0? sumArr + num:sumArr,0);
 };
 
 /**
@@ -16,6 +16,15 @@ const sumMultiples = arr => {
  */
 const isValidDNA = str => {
   if (str === undefined) throw new Error("str is required");
+  const strDNA = ["C", "G", "T", "A"];
+  const splitInput = str.toUpperCase().split('');
+
+  for (let i = 0; i < splitInput.length; i++) {
+    if (!strDNA.includes(splitInput[i])) {
+      return false;
+    }
+  }
+  return true;
 };
 
 /**
@@ -23,8 +32,31 @@ const isValidDNA = str => {
  * @param {String} str
  * @returns {String}
  */
-const getComplementaryDNA = str => {
+
+ const getComplementaryDNA = str => {
   if (str === undefined) throw new Error("str is required");
+
+  let strOut = "";
+  let strSplit = str.toUpperCase().split('');
+
+  strSplit.forEach((element) => {
+    switch(element)
+    {
+      case "A":
+        strOut += "T";
+        break;
+      case "C":
+        strOut += "G";
+        break;
+      case "T":
+        strOut += "A";
+        break;
+      case "G":
+        strOut += "C";
+        break;
+    }
+  })
+  return strOut;
 };
 
 /**
@@ -63,18 +95,7 @@ const createMatrix = (n, fill) => {
   if (fill === undefined) throw new Error("fill is required");
   if (!Number.isInteger(Math.sqrt(n))) throw new Error("n is not a square number(e.g. sq num of 9 is 3");
   
-  /*
-  //initial version
-  const sr = Math.sqrt(n);
-  const arr = new Array(sr);
-  for (let i=0; i < arr.length; i++) {arr[i] = fill;};
-  const finalarr = new Array(sr);
-  for (let j=0; j < finalarr.length; j++) {finalarr[j] = arr;};
-  
-  return finalarr;
-  */
   return Array(Math.sqrt(n)).fill(Array(Math.sqrt(n)).fill(fill));
-
 };
 
 /**
@@ -92,13 +113,23 @@ const createMatrix = (n, fill) => {
 const areWeCovered = (staff, day) => {
   if (staff === undefined) throw new Error("staff is required");
   if (day === undefined) throw new Error("day is required");
+
+  let count = 0;
+  for (let i = 0; i < staff.length; i++) {
+    for (let j = 0; j < staff[i].rota.length; j++) {
+      if (staff[i].rota[j] === day) {
+        count++;
+      }
+    }
+  };
+  return (count >= 3);
 };
 
 module.exports = {
   sumMultiples,
-  //isValidDNA,
-  //getComplementaryDNA,
-  isItPrime //,
-  //createMatrix,
-  //areWeCovered
+  isValidDNA,
+  getComplementaryDNA,
+  isItPrime ,
+  createMatrix,
+  areWeCovered
 };

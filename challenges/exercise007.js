@@ -4,7 +4,7 @@
  */
 const sumDigits = n => {
   if (n === undefined) throw new Error("n is required");
-  return n.toString().split('').map(Number).reduce(function (a, b) {return a + b;}, 0);
+  return n.toString().split('').map(Number).reduce(function (arr, num) {return arr + num;}, 0);
 };
 
 /**
@@ -61,9 +61,10 @@ const createRange = (start, end, step = 1) => {
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
-  //http://book.mixu.net/node/ch5.html
+
   let nameProp = "";
   let nameArr = [];
+
   function searchObject(users) {
     let dateProp = "";
     let minutes = 0;
@@ -76,13 +77,7 @@ const getScreentimeAlertList = (users, date) => {
             minutes += usageProp[el];
           }
           if (minutes > 100) {
-            //console.log(nameProp + ': ' + dateProp + ': ' + minutes.toString()); 
             nameArr.push(nameProp);
-            console.log(nameArr);
-          }
-          else {
-           // console.log("No user found!"); 
-           console.log(nameArr);
           }
         }
         else {
@@ -134,8 +129,25 @@ const hexToRGB = hexStr => {
  * The function should return "X" if player X has won, "0" if the player 0 has won, and null if there is currently no winner.
  * @param {Array} board
  */
-const findWinner = board => {
+ const findWinner = board => {
   if (board === undefined) throw new Error("board is required");
+  if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[2][2] == board[0][0]) { 
+    return board[0][0];
+  }
+  else if (board[2][0] != null && board[2][0] == board[1][1] && board[1][1] == board[0][2] && board[0][2] == board[2][0])  { 
+    return board[2][0];
+  }
+  else {
+    for (let i = 0; i < 3; i++) {
+      if (board[i][0] != null && board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][2] == board[i][0]) {
+        return board[i][0];
+      }
+      else if (board[0][i] != null && board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[2][i] == board[0][i]) {
+        return board[0][i];
+      }
+    }
+    return "No winner";
+  }
 };
 
 module.exports = {
